@@ -1,21 +1,68 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, { useState,useEffect } from 'react';
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+
+const App = () => {
+    
+    const [notes,setNotes] = useState([]);
+    const [title,setTitle] = useState('');
+    const [body,setBody] = useState('');
+
+   const addNote = (e) => {
+     e.preventDefault();
+     setNotes([
+       ...notes,
+       {title,body}
+     ])
+     setTitle('');
+     setBody('');
+   }
+
+   const removeNote = (title) => {
+     setNotes(notes.filter((note) => note.title !== title))
+   }
+  
+     useEffect(() => {
+       const notesData = JSON.parse(localStorage.getItem('notes'));
+       if (notesData) {
+         setNotes(notesData)
+       }
+     }, []);
+
+   useEffect(() => {
+     localStorage.setItem('notes',JSON.stringify(notes));
+   },[notes]);
+
+  return (
+    <div>
+    <h1>Notes </h1>
+    {notes.map((note) => {
+      return (
+        <div>
+          <h3>{note.title}</h3>
+          <p>{note.body}</p>
+          <button>X</button>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+      )
+    })}
+    <p>Add note</p>
+    <form onSubmit={addNote}>
+      <input value={title} onChange={(e) => setTitle(e.target.value)} />
+      <textarea value={body} onChange={(e) => setBody(e.target.value)}></textarea>
+      <button>Add note</button>
+    </form>
+    </div>
+   
+  )
 }
 
 export default App;
+
+
+
+  
+   
+
+
+  
+
