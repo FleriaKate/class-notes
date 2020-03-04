@@ -21,15 +21,15 @@ const App = () => {
     }
 
     useEffect(() => {
-      const taskData = JSON.parse(localStorage.getItem('tasks'));
-      if (taskData) {
+      const tasksData = JSON.parse(localStorage.getItem('tasks'));
+      if (tasksData) {
         setTasks(tasksData)
       }
     },[]);
   
     useEffect(() => {
-      const taskData = JSON.parse(localStorage.getItem('tasks'));
-      if (taskData) {
+      const tasksData = JSON.parse(localStorage.getItem('tasks'));
+      if (tasksData) {
         setTasks(tasksData)
       }
     },[]);
