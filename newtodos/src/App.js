@@ -1,31 +1,41 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useReducer } from 'react';
+import AddNoteForm from './components/AddNoteForm'
 import './App.css';
+
+const notesReducer = (state,action) => {
+  switch (action.type) {
+    case 'POPULATE_NOTES'://action
+      return action.notes;
+   case 'ADD_NOTES'://action
+     return [
+       ...state,
+      { title: action.title,body:action.body}
+     ]
+     case 'REMOVE_NOTE'://action
+       return state.filter((note) => note.title !== action.title);
+     default:
+       return state;
+  }
+}
 
 
 const App = () => {
     
-    const [notes,setNotes] = useState([]);
-    const [title,setTitle] = useState('');
-    const [body,setBody] = useState('');
-
-   const addNote = (e) => {
-     e.preventDefault();
-     setNotes([
-       ...notes,
-       {title,body}
-     ])
-     setTitle('');
-     setBody('');
-   }
+    const [notes,dispatch] = useReducer(notesReducer,[]);
+    
 
    const removeNote = (title) => {
-     setNotes(notes.filter((note) => note.title !== title))
-   }
+     dispatch({
+       type:'REMOVE_NOTE',
+       title
+     })
+     
+    }
   
      useEffect(() => {
-       const notesData = JSON.parse(localStorage.getItem('notes'));
-       if (notesData) {
-         setNotes(notesData)
+       const notes = JSON.parse(localStorage.getItem('notes'));
+       if (notes) {
+         dispatch({ type: 'POPULATE_NOTES',notes })
        }
      }, []);
 
@@ -41,16 +51,11 @@ const App = () => {
         <div>
           <h3>{note.title}</h3>
           <p>{note.body}</p>
-          <button>X</button>
+           <button onClick={() => removeNote(note.title)}>x</button> 
         </div>
       )
     })}
-    <p>Add note</p>
-    <form onSubmit={addNote}>
-      <input value={title} onChange={(e) => setTitle(e.target.value)} />
-      <textarea value={body} onChange={(e) => setBody(e.target.value)}></textarea>
-      <button>Add note</button>
-    </form>
+   <AddNoteForm dispatch={dispatch} />
     </div>
    
   )
