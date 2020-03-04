@@ -1,11 +1,10 @@
-import React ,{useState}from 'react';
-
+import React ,{useState,useEffect }from 'react';
 import './App.css';
 
 const App = () => {
     const [tasks,setTasks] = useState([]);
     const [description,setDescription] = useState("");
-    const [completed,setCompleted] = useState(false);
+    const [completed,] = useState(false);
 
     const addTask =(e) => {
       e.preventDefault();
@@ -14,29 +13,49 @@ const App = () => {
         {description,completed}
       ])
       setDescription('');
-      setCompleted(false)
     }
+
+    const removeTask = (description) => {
+      setTasks(tasks.filter((task) => task.description !== description))
+
+    }
+
+    useEffect(() => {
+      const taskData = JSON.parse(localStorage.getItem('tasks'));
+      if (taskData) {
+        setTasks(tasksData)
+      }
+    },[]);
   
+    useEffect(() => {
+      const taskData = JSON.parse(localStorage.getItem('tasks'));
+      if (taskData) {
+        setTasks(tasksData)
+      }
+    },[]);
+
+    useEffect(() =>{
+      localStorage.setItem('tasks',JSON.stringify(tasks));
+    },[tasks]);
+
    return (
     <div>
-      <h1>Tasks App</h1>
+      <h1>Tasks </h1>
       {tasks.map((task)=>{
         return (
-        <div>
-          <h1>{task.description}</h1>
-          <h2>{task.completed}</h2>
+        <div key={task.description}>
+          <h3>{task.description}</h3>
+          <button onClick={() =>removeTask(task.description)}>x</button>
           </div>
         )
       })}
       <p>Add Task</p>
       <form onSubmit={addTask}>
         <input value={description} onChange={(e)=> setDescription(e.target.value)}/>
-        <textarea value={completed} onChange={(e)=> setCompleted(e.target.value)}/>
-        <button>Submit</button>
+        <button>Add Task</button>
       </form>
     </div>
   )
-
 }
 
   
