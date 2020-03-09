@@ -54,27 +54,75 @@ var Header = function Header(props) {
     );
 };
 
-var Action = function Action() {
-    return React.createElement(
-        'div',
-        null,
-        React.createElement(
-            'button',
-            null,
-            'What should I do ?'
-        )
-    );
-};
+var Action = function (_React$Component2) {
+    _inherits(Action, _React$Component2);
 
-var Options = function Options(props) {
-    return React.createElement(
-        'div',
-        null,
-        props.options.map(function (option) {
-            return React.createElement(Option, { key: option, optionText: option });
-        })
-    );
-};
+    function Action() {
+        _classCallCheck(this, Action);
+
+        return _possibleConstructorReturn(this, (Action.__proto__ || Object.getPrototypeOf(Action)).apply(this, arguments));
+    }
+
+    _createClass(Action, [{
+        key: 'handlePick',
+        value: function handlePick() {
+            alert('Seattle is awesome'); //alert is a browser function
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                null,
+                React.createElement(
+                    'button',
+                    { onClick: this.handlePick },
+                    'What should I do?'
+                )
+            );
+        }
+    }]);
+
+    return Action;
+}(React.Component);
+
+//handleRemoveAll
+//console log remove data options
+
+var Options = function (_React$Component3) {
+    _inherits(Options, _React$Component3);
+
+    function Options() {
+        _classCallCheck(this, Options);
+
+        return _possibleConstructorReturn(this, (Options.__proto__ || Object.getPrototypeOf(Options)).apply(this, arguments));
+    }
+
+    _createClass(Options, [{
+        key: 'handleRemoveAll',
+        value: function handleRemoveAll() {
+            console.log('remove data options');
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                null,
+                React.createElement(
+                    'button',
+                    { onClick: this.handleRemoveAll },
+                    'Remove All'
+                ),
+                this.props.options.map(function (option) {
+                    return React.createElement(Option, { key: option, optionText: option });
+                })
+            );
+        }
+    }]);
+
+    return Options;
+}(React.Component);
 
 var Option = function Option(props) {
     return React.createElement(

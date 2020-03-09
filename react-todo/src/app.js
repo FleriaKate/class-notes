@@ -21,20 +21,41 @@ const Header = (props) => (
     </div>
 )
 
-const Action = () => (
-    <div>
-        <button>What should I do ?</button>
-    </div>
-)
 
-const Options = (props) => (
-    <div>{props.options.map((option) => {
+class Action extends React.Component {
+    handlePick() {
+        alert('Seattle is awesome')//alert is a browser function
+    }
+    render() {
         return (
-            <Option key={option} optionText={option} />
-        );
-    })}</div>
-)
+            <div>
+                <button onClick={this.handlePick}>What should I do?</button>
+            </div>
+        )
+    }
+    
+    }
 
+//handleRemoveAll
+//console log remove data options
+
+class Options extends React.Component {
+    handleRemoveAll(){
+        console.log('remove data options');
+    }
+    render() {
+        return (
+            <div>
+                <button onClick={this.handleRemoveAll}>Remove All</button>
+                {this.props.options.map((option) => {
+                return (
+                    <Option key={option} optionText={option}  />
+                );
+                  })}
+                    </div>
+        )
+    }
+}
 const Option = (props) => (
     <div>{props.optionText}</div>
 )
