@@ -1,0 +1,13 @@
+{
+  "name": "react-todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "babel":"babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch",
+    "serve":"live-server public"
+  },
+  "author": "\"cathy\"",
+  "license": "ISC"
+}
+
