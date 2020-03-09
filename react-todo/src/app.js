@@ -1,20 +1,23 @@
 class TodoApp extends React.Component {
     render() {
+        const title = 'Todo App';
+        const subtitle = 'Organize schedule';
+        const options = ['Thing  one','Thing two','Thing three']
         return (
             <div>
-                <Header />
+                <Header title={title} subtitle={subtitle} />
                 <Action />
-                <Options />
+                <Options options={options}/>
                 <AddOption />
             </div>
         )
     }
 }
 
-const Header = () => (
+const Header = (props) => (
     <div>
-        <h1>Todo App</h1>
-        <h2>Organize todos</h2>
+        <h1>{props.title}</h1>
+        <h2>{props.subtitle}</h2>
     </div>
 )
 
@@ -24,12 +27,20 @@ const Action = () => (
     </div>
 )
 
-const Options = () => (
-    <div>Options component</div>
+const Options = (props) => (
+    <div>{props.options.map((option) => {
+        return (
+            <Option key={option} optionText={option} />
+        );
+    })}</div>
 )
 
-const AddOption = () => (
-    <div>Add Option</div>
+const Option = (props) => (
+    <div>{props.optionText}</div>
+)
+
+const AddOption = (props) => (
+    <div>{props.optionText}</div>
 )
 
 ReactDOM.render(<TodoApp />,document.getElementById('app'));

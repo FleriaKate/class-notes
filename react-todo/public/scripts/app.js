@@ -20,12 +20,15 @@ var TodoApp = function (_React$Component) {
     _createClass(TodoApp, [{
         key: 'render',
         value: function render() {
+            var title = 'Todo App';
+            var subtitle = 'Organize schedule';
+            var options = ['Thing  one', 'Thing two', 'Thing three'];
             return React.createElement(
                 'div',
                 null,
-                React.createElement(Header, null),
+                React.createElement(Header, { title: title, subtitle: subtitle }),
                 React.createElement(Action, null),
-                React.createElement(Options, null),
+                React.createElement(Options, { options: options }),
                 React.createElement(AddOption, null)
             );
         }
@@ -34,19 +37,19 @@ var TodoApp = function (_React$Component) {
     return TodoApp;
 }(React.Component);
 
-var Header = function Header() {
+var Header = function Header(props) {
     return React.createElement(
         'div',
         null,
         React.createElement(
             'h1',
             null,
-            'Todo App'
+            props.title
         ),
         React.createElement(
             'h2',
             null,
-            'Organize todos'
+            props.subtitle
         )
     );
 };
@@ -63,19 +66,29 @@ var Action = function Action() {
     );
 };
 
-var Options = function Options() {
+var Options = function Options(props) {
     return React.createElement(
         'div',
         null,
-        'Options component'
+        props.options.map(function (option) {
+            return React.createElement(Option, { key: option, optionText: option });
+        })
     );
 };
 
-var AddOption = function AddOption() {
+var Option = function Option(props) {
     return React.createElement(
         'div',
         null,
-        'Add Option'
+        props.optionText
+    );
+};
+
+var AddOption = function AddOption(props) {
+    return React.createElement(
+        'div',
+        null,
+        props.optionText
     );
 };
 
