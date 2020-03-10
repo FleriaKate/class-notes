@@ -2,6 +2,7 @@ class TodoApp extends React.Component {
     constructor(props) {
         super(props);
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
+        this.handlePick = this.handlePick.bind(this)
         this.state = {
             options:['Milan','Berlin','Cairo']
         }
@@ -13,6 +14,12 @@ class TodoApp extends React.Component {
             }
         })
     }
+    handlePick() {
+        const random = Math.floor(Math.random() *
+        this.state.options.length);
+        const option = this.state.options[random];
+        alert(option);
+    }
     render() {
         const title = 'Todo App';
         const subtitle = 'Organize schedule';
@@ -20,7 +27,9 @@ class TodoApp extends React.Component {
         return (
             <div>
                 <Header title={title} subtitle={subtitle} />
-                <Action />
+                <Action 
+                handlePick={this.handlePick}
+                />
                 <Options options={this.state.options}
                 handleDeleteOptions={this.handleDeleteOptions}
 
@@ -39,14 +48,12 @@ const Header = (props) => (
 )
 
 
-class Action extends React.Component {
-    handlePick() {
-        alert('Seattle is awesome')//alert is a browser function
-    }
+class Action extends React.Component { 
+    
     render() {
         return (
             <div>
-                <button onClick={this.handlePick}>What should I do?</button>
+                <button onClick={this.props.handlePick}>What should I do?</button>
             </div>
         )
     }

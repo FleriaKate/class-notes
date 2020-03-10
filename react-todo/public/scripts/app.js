@@ -17,6 +17,7 @@ var TodoApp = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (TodoApp.__proto__ || Object.getPrototypeOf(TodoApp)).call(this, props));
 
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
+        _this.handlePick = _this.handlePick.bind(_this);
         _this.state = {
             options: ['Milan', 'Berlin', 'Cairo']
         };
@@ -33,6 +34,13 @@ var TodoApp = function (_React$Component) {
             });
         }
     }, {
+        key: 'handlePick',
+        value: function handlePick() {
+            var random = Math.floor(Math.random() * this.state.options.length);
+            var option = this.state.options[random];
+            alert(option);
+        }
+    }, {
         key: 'render',
         value: function render() {
             var title = 'Todo App';
@@ -42,7 +50,9 @@ var TodoApp = function (_React$Component) {
                 'div',
                 null,
                 React.createElement(Header, { title: title, subtitle: subtitle }),
-                React.createElement(Action, null),
+                React.createElement(Action, {
+                    handlePick: this.handlePick
+                }),
                 React.createElement(Options, { options: this.state.options,
                     handleDeleteOptions: this.handleDeleteOptions
 
@@ -82,11 +92,6 @@ var Action = function (_React$Component2) {
     }
 
     _createClass(Action, [{
-        key: 'handlePick',
-        value: function handlePick() {
-            alert('Seattle is awesome'); //alert is a browser function
-        }
-    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
@@ -94,7 +99,7 @@ var Action = function (_React$Component2) {
                 null,
                 React.createElement(
                     'button',
-                    { onClick: this.handlePick },
+                    { onClick: this.props.handlePick },
                     'What should I do?'
                 )
             );
