@@ -19,6 +19,7 @@ var TodoApp = function (_React$Component) {
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handlePick = _this.handlePick.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
+        _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
         _this.state = {
             options: []
         };
@@ -31,6 +32,17 @@ var TodoApp = function (_React$Component) {
             this.setState(function () {
                 return {
                     options: []
+                };
+            });
+        }
+    }, {
+        key: 'handleDeleteOption',
+        value: function handleDeleteOption(optionToRemove) {
+            this.setState(function (prevState) {
+                return {
+                    options: prevState.options.filter(function (option) {
+                        return optionToRemove !== option;
+                    })
                 };
             });
         }
@@ -94,7 +106,8 @@ var TodoApp = function (_React$Component) {
                 }),
                 React.createElement(Options, {
                     options: this.state.options,
-                    handleDeleteOptions: this.handleDeleteOptions
+                    handleDeleteOptions: this.handleDeleteOptions,
+                    handleDeleteOption: this.handleDeleteOption
 
                 }),
                 React.createElement(AddOption, {
@@ -164,6 +177,8 @@ var Options = function (_React$Component3) {
     _createClass(Options, [{
         key: 'render',
         value: function render() {
+            var _this4 = this;
+
             return React.createElement(
                 'div',
                 null,
@@ -173,7 +188,11 @@ var Options = function (_React$Component3) {
                     'Remove All'
                 ),
                 this.props.options.map(function (option) {
-                    return React.createElement(Option, { key: option, optionText: option });
+                    return React.createElement(Option, {
+                        key: option,
+                        optionText: option,
+                        handleDeleteOption: _this4.props.handleDeleteOption
+                    });
                 })
             );
         }
@@ -189,7 +208,9 @@ var Option = function Option(props) {
         props.optionText,
         React.createElement(
             'button',
-            null,
+            { onClick: function onClick() {
+                    props.handleDeleteOption(props.optionText);
+                } },
             'remove'
         )
     );
@@ -201,14 +222,14 @@ var AddOption = function (_React$Component4) {
     function AddOption(props) {
         _classCallCheck(this, AddOption);
 
-        var _this4 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
+        var _this5 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
 
-        _this4.handleAddOption = _this4.handleAddOption.bind(_this4);
-        _this4.state = {
+        _this5.handleAddOption = _this5.handleAddOption.bind(_this5);
+        _this5.state = {
             error: undefined
         };
 
-        return _this4;
+        return _this5;
     }
 
     _createClass(AddOption, [{

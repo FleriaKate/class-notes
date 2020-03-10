@@ -4,6 +4,7 @@ class TodoApp extends React.Component {
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
         this.handlePick = this.handlePick.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
+        this.handleDeleteOption = this.handleDeleteOption.bind(this);
         this.state = {
             options:[]
         }
@@ -12,6 +13,13 @@ class TodoApp extends React.Component {
         this.setState(() => {
             return {
                 options:[]
+            }
+        })
+    }
+    handleDeleteOption(optionToRemove) {
+        this.setState((prevState) => {
+            return {
+                options:prevState.options.filter((option) => optionToRemove !== option)
             }
         })
     }
@@ -68,6 +76,7 @@ class TodoApp extends React.Component {
                 <Options
                  options={this.state.options}
                 handleDeleteOptions={this.handleDeleteOptions}
+                handleDeleteOption={this.handleDeleteOption}
 
                 />
                 <AddOption 
@@ -113,18 +122,22 @@ class Options extends React.Component {
                 <button onClick={this.props.handleDeleteOptions}>Remove All</button>
                 {this.props.options.map((option) => {
                 return (
-                    <Option key={option} optionText={option}  />
+                    <Option
+                     key={option} 
+                     optionText={option} 
+                     handleDeleteOption={this.props.handleDeleteOption} 
+                     />
                 );
-                  })}
-                    </div>
+            })}
+        </div>
         )
     }
 }
 const Option = (props) => (
     <div>
         {props.optionText}
-        <button>remove</button>
-        </div>
+        <button onClick={() => {props.handleDeleteOption(props.optionText)}}>remove</button>
+    </div>
 )
 
 
