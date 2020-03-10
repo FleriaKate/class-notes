@@ -20,7 +20,7 @@ var TodoApp = function (_React$Component) {
         _this.handlePick = _this.handlePick.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
         _this.state = {
-            options: ['Milan', 'Berlin', 'Cairo']
+            options: []
         };
         return _this;
     }
@@ -57,13 +57,26 @@ var TodoApp = function (_React$Component) {
         }
     }, {
         key: 'componentDidUpdate',
-        value: function componentDidUpdate() {
-            console.log('saving data');
+        value: function componentDidUpdate(prevProps, prevState) {
+            if (prevState.options.length !== this.state.options.length) {
+                var json = JSON.stringify(this.state.options);
+                localStorage.setItem('options', json);
+            }
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            console.log('fetching data');
+            try {
+                var json = localStorage.getItem('options');
+                var options = JSON.parse(json);
+                if (options) {
+                    this.setState(function () {
+                        return { options: options };
+                    });
+                }
+            } catch (e) {
+                console.log(e);
+            }
         }
     }, {
         key: 'render',
@@ -139,9 +152,6 @@ var Action = function (_React$Component2) {
     return Action;
 }(React.Component);
 
-//handleRemoveAll
-//console log remove data options
-
 var Options = function (_React$Component3) {
     _inherits(Options, _React$Component3);
 
@@ -176,7 +186,12 @@ var Option = function Option(props) {
     return React.createElement(
         'div',
         null,
-        props.optionText
+        props.optionText,
+        React.createElement(
+            'button',
+            null,
+            'remove'
+        )
     );
 };
 
@@ -214,6 +229,11 @@ var AddOption = function (_React$Component4) {
             return React.createElement(
                 'div',
                 null,
+                this.state.error && React.createElement(
+                    'p',
+                    null,
+                    this.state.error
+                ),
                 React.createElement(
                     'form',
                     { onSubmit: this.handleAddOption },

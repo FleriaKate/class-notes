@@ -5,7 +5,7 @@ class TodoApp extends React.Component {
         this.handlePick = this.handlePick.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
         this.state = {
-            options:['Milan','Berlin','Cairo']
+            options:[]
         }
     }
     handleDeleteOptions() {
@@ -24,7 +24,7 @@ class TodoApp extends React.Component {
     handleAddOption(option) {
         if(!option) {
             return 'Enter valid value to add item';
-        }else if (this.state.options.indexOf(option) > -1) {
+        } else if (this.state.options.indexOf(option) > -1) {
             return 'This option already exists';
         }
         this.setState((prevState) => {
@@ -32,14 +32,28 @@ class TodoApp extends React.Component {
                 options: prevState.options.concat(option)
             }
         })
+    }
+    componentDidUpdate(prevProps,prevState){
+        if (prevState.options.length !== this.state.options.length) {
+            const json = JSON.stringify(this.state.options);
+            localStorage.setItem('options',json)
         }
-    componentDidUpdate() {
-        console.log('saving data')
     }
+            
     componentDidMount() {
-        console.log('fetching data')
+        try {
+            const json = localStorage.getItem('options');
+            const options = JSON.parse(json);
+            if (options) {
+                this.setState(() => {
+                    return { options }
+                })
+            }
+        } catch (e) {
+        console.log(e);
+        }
     }
-    
+
     render() {
         const title = 'Todo App';
         const subtitle = 'Organize schedule';
@@ -88,8 +102,6 @@ class Action extends React.Component {
     
     }
 
-//handleRemoveAll
-//console log remove data options
 
 class Options extends React.Component {
     constructor(props) {
@@ -109,7 +121,10 @@ class Options extends React.Component {
     }
 }
 const Option = (props) => (
-    <div>{props.optionText}</div>
+    <div>
+        {props.optionText}
+        <button>remove</button>
+        </div>
 )
 
 
@@ -128,7 +143,7 @@ class AddOption extends React.Component {
         const option = e.target.elements.option.value.trim();
         const error = this.props.handleAddOption(option);
         this.setState(() => {
-            return {error}
+            return  { error } 
         })
 
         e.target.elements.option.value = ''
@@ -136,12 +151,13 @@ class AddOption extends React.Component {
     render (){
         return(
         <div>
+            {this.state.error && <p>{this.state.error}</p>}
             <form onSubmit={this.handleAddOption}>
                 <input type="text" name="option"/>
                 <button>Add Option</button>
             </form>
         </div>
-         )
+        )
 
     }
 }
