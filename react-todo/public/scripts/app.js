@@ -41,6 +41,20 @@ var TodoApp = function (_React$Component) {
             alert(option);
         }
     }, {
+        key: 'handleAddOption',
+        value: function handleAddOption(option) {
+            if (!option) {
+                return 'Enter valid value to add item';
+            } else if (this.state.options.indexOf(option) > -1) {
+                return 'This option already exists';
+            }
+            this.setState(function (prevState) {
+                return {
+                    options: prevState.options.concat(option)
+                };
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var title = 'Todo App';
@@ -51,13 +65,17 @@ var TodoApp = function (_React$Component) {
                 null,
                 React.createElement(Header, { title: title, subtitle: subtitle }),
                 React.createElement(Action, {
-                    handlePick: this.handlePick
+                    handlePick: this.handlePick,
+                    hasOptions: this.state.options.length > 0
                 }),
-                React.createElement(Options, { options: this.state.options,
+                React.createElement(Options, {
+                    options: this.state.options,
                     handleDeleteOptions: this.handleDeleteOptions
 
                 }),
-                React.createElement(AddOption, null)
+                React.createElement(AddOption, {
+                    handleAddOption: this.handleAddOption
+                })
             );
         }
     }]);
@@ -99,7 +117,8 @@ var Action = function (_React$Component2) {
                 null,
                 React.createElement(
                     'button',
-                    { onClick: this.props.handlePick },
+                    { onClick: this.props.handlePick,
+                        disabled: !this.props.hasOptions },
                     'What should I do?'
                 )
             );
@@ -153,10 +172,17 @@ var Option = function Option(props) {
 var AddOption = function (_React$Component4) {
     _inherits(AddOption, _React$Component4);
 
-    function AddOption() {
+    function AddOption(props) {
         _classCallCheck(this, AddOption);
 
-        return _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).apply(this, arguments));
+        var _this4 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
+
+        _this4.handleAddOption = _this4.handleAddOption.bind(_this4);
+        _this4.state = {
+            error: undefined
+        };
+
+        return _this4;
     }
 
     _createClass(AddOption, [{
@@ -164,9 +190,12 @@ var AddOption = function (_React$Component4) {
         value: function handleAddOption(e) {
             e.preventDefault();
             var option = e.target.elements.option.value.trim();
-            if (option) {
-                console.log(option);
-            }
+            var error = this.props.handleAddOption(option);
+            this.setState(function () {
+                return { error: error };
+            });
+
+            e.target.elements.option.value = '';
         }
     }, {
         key: 'render',
