@@ -18,6 +18,7 @@ var TodoApp = function (_React$Component) {
 
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handlePick = _this.handlePick.bind(_this);
+        _this.handleAddOption = _this.handleAddOption.bind(_this);
         _this.state = {
             options: ['Milan', 'Berlin', 'Cairo']
         };
@@ -53,6 +54,16 @@ var TodoApp = function (_React$Component) {
                     options: prevState.options.concat(option)
                 };
             });
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            console.log('saving data');
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            console.log('fetching data');
         }
     }, {
         key: 'render',

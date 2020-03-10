@@ -3,6 +3,7 @@ class TodoApp extends React.Component {
         super(props);
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
         this.handlePick = this.handlePick.bind(this);
+        this.handleAddOption = this.handleAddOption.bind(this);
         this.state = {
             options:['Milan','Berlin','Cairo']
         }
@@ -32,6 +33,12 @@ class TodoApp extends React.Component {
             }
         })
         }
+    componentDidUpdate() {
+        console.log('saving data')
+    }
+    componentDidMount() {
+        console.log('fetching data')
+    }
     
     render() {
         const title = 'Todo App';
