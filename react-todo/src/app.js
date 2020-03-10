@@ -1,13 +1,30 @@
 class TodoApp extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
+        this.state = {
+            options:['Milan','Berlin','Cairo']
+        }
+    }
+    handleDeleteOptions() {
+        this.setState(() => {
+            return {
+                options:[]
+            }
+        })
+    }
     render() {
         const title = 'Todo App';
         const subtitle = 'Organize schedule';
-        const options = ['Thing  one','Thing two','Thing three']
+    
         return (
             <div>
                 <Header title={title} subtitle={subtitle} />
                 <Action />
-                <Options options={options}/>
+                <Options options={this.state.options}
+                handleDeleteOptions={this.handleDeleteOptions}
+
+                />
                 <AddOption />
             </div>
         )
@@ -42,16 +59,11 @@ class Action extends React.Component {
 class Options extends React.Component {
     constructor(props) {
         super(props);
-        this.handleRemoveAll = this.handleRemoveAll.bind(this);
-    }
-    handleRemoveAll(){
-        console.log('remove data options');
-        console.log(this.props.options);
     }
     render() {
         return (
             <div>
-                <button onClick={this.handleRemoveAll}>Remove All</button>
+                <button onClick={this.props.handleDeleteOptions}>Remove All</button>
                 {this.props.options.map((option) => {
                 return (
                     <Option key={option} optionText={option}  />
