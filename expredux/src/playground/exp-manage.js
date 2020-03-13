@@ -95,6 +95,23 @@ const sortByDate = () => {
     }
 }
 
+//SET_START_DATE
+const setStartDate = (startDate) => {
+    return {
+        type: 'SET_START_DATE',
+        startDate
+    }
+}
+
+//SET_END_DATE
+const setEndDate = (endDate) => {
+    return {
+        type:'SET_END_DATA',
+        endDate
+
+    }
+}
+
 //Expenses Reducer
 const expensesReducerDefaultState = [];
 const expensesReducer = (state = expensesReducerDefaultState,action) => {
@@ -125,8 +142,8 @@ const expensesReducer = (state = expensesReducerDefaultState,action) => {
 const filtersReducerDefaultState = {
     text: '',
     sortBy: 'date',
-    startDate: undefined,
-    endDate: undefined
+    startDate: 5000,
+    endDate: 100000
 };
 
 const filtersReducer = (state = filtersReducerDefaultState,action) => {
@@ -142,7 +159,16 @@ const filtersReducer = (state = filtersReducerDefaultState,action) => {
                 case 'SORT_BY_DATE':
                     return Object.assign({},state,{
                         sortBy:'date'
-                    })
+                    });
+                    case 'SET_START_DATE':
+                        return Object.assign({},state,{
+                            startDate:action.startDate
+
+                        })
+                    case 'SET_END_DATE':
+                        return Object.assign({},state,{
+                             endDate:action.endDate
+                        })
 
         default:
             return state;
@@ -175,3 +201,6 @@ store.dispatch(setTextFilter('sport'));
 
 store.dispatch(sortByAmount());
 store.dispatch(sortByDate());
+
+store.dispatch(setStartDate(5000));
+store.dispatch(setEndDate(10000));
