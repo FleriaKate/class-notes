@@ -1,3 +1,22 @@
+
+//expenses;;;filters
+// const demoState = {
+//     expenses: [{
+//         id:'123abc',
+//         description:'country travel',
+//         note:'vacation holiday',
+//         amount:50000,
+//         createdAt: 30000
+//     }],
+
+//     filters: {
+//         text: 'sport',
+//         sortBy:'date', //date or amount
+//         startDate: undefined,
+//         endDate: undefined
+//     }
+// }
+
 import { createStore,combineReducers }  from 'redux';
 import uuid from 'uuid';
 
@@ -35,15 +54,26 @@ const addExpense = (
     }
 }
 }
+
+//REMOVE_EXPENSE
+const removeExpense = (expense = {}) => {
+    return {
+        type:'REMOVE_EXPENSE',
+        id:expense.id
+    }
+}
+
 //Expenses Reducer
 const expensesReducerDefaultState = [];
 const expensesReducer = (state = expensesReducerDefaultState,action) => {
     switch (action.type) {
-        case 'ADD_EXPENSE':
-            return [
-                ...state,
-                action.expense
-            ] //Object.assign({},state,action.expense)
+        // case 'ADD_EXPENSE':
+        //     return [
+        //         ...state,THIS IS FOR ADDING EXPENSE
+        //         action.expense
+            //] //Object.assign({},state,action.expense)
+            case 'REMOVE_EXPENSE':
+                return state.filter((expense) => expense.id !== action.id);
         default:
             return state;
     }
@@ -82,24 +112,9 @@ const expenseOne = store.dispatch(addExpense({description:'Vacation',amount:500}
 const expenseTwo = store.dispatch(addExpense({description:'Coffee',amount:600 })
 );
 
-const expenseThree = store.dispatch(addExpense('miracle baby'))
+const expenseThree = store.dispatch(addExpense('eyes'))
 const expenseFour = store.dispatch(addExpense());
 
-///expenses;;;filters
-// const demoState = {
-//     expenses: [{
-//         id:'123abc',
-//         description:'country travel',
-//         note:'vacation holiday',
-//         amount:50000,
-//         createdAt: 30000
-//     }],
+store.dispatch(removeExpense({id:expenseThree.expense.id}));
 
-//     filters: {
-//         text: 'sport',
-//         sortBy:'date', //date or amount
-//         startDate: undefined,
-//         endDate: undefined
-//     }
-// }
 
