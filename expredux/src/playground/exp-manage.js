@@ -1,4 +1,19 @@
 import { createStore,combineReducers }  from 'redux';
+import uuid from 'uuid';
+
+//ADD EXPENSE
+const addExpense = (expense) => {
+    return {
+        type:'ADD_EXPENSE',
+        expense:{
+            id: uuid(),
+            description:expense.description ? expense.description : '',
+            note: expense.note ? expense.note:'',
+            amount: expense.amount ? expense.amount : 0,
+            createdAt: expense.createdAt ? expense.createdAt : 0
+        }
+    }
+}
 
 //Expenses Reducer
 const expensesReducerDefaultState = [];
@@ -32,7 +47,13 @@ const store = createStore(
     })
 );
 
-console.log(store.getState());
+
+store.subscribe(() => {
+    console.log(store.getState());
+})
+const expenseOne = store.dispatch(addExpense({description:'Vacation',amount:500}
+));
+
 ///expenses;;;filters
 // const demoState = {
 //     expenses: [{
