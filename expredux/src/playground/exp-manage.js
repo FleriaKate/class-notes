@@ -11,6 +11,7 @@ const addExpense = (expense) => {
             note: expense.note ? expense.note:'',
             amount: expense.amount ? expense.amount : 0,
             createdAt: expense.createdAt ? expense.createdAt : 0
+
         }
     }
 }
@@ -19,6 +20,11 @@ const addExpense = (expense) => {
 const expensesReducerDefaultState = [];
 const expensesReducer = (state = expensesReducerDefaultState,action) => {
     switch (action.type) {
+        case 'ADD_EXPENSE':
+            return [
+                ...state,
+                action.expense
+            ] //Object.assign({},state,action.expense)
         default:
             return state;
     }
@@ -54,6 +60,9 @@ store.subscribe(() => {
 const expenseOne = store.dispatch(addExpense({description:'Vacation',amount:500}
 ));
 
+const expenseTwo = store.dispatch(addExpense({description:'Coffee',amount:600 })
+);
+
 ///expenses;;;filters
 // const demoState = {
 //     expenses: [{
@@ -71,3 +80,4 @@ const expenseOne = store.dispatch(addExpense({description:'Vacation',amount:500}
 //         endDate: undefined
 //     }
 // }
+
