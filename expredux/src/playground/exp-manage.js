@@ -82,6 +82,19 @@ const setTextFilter = (text = '') => {
     }
 }
 
+//SORT BY AMOUNT
+const sortByAmount = () => {
+    return {
+        type: 'SORT_BY_AMOUNT'
+    }
+}
+//SORT BY DATE
+const sortByDate = () => {
+    return {
+        type:'SORT_BY_DATE'
+    }
+}
+
 //Expenses Reducer
 const expensesReducerDefaultState = [];
 const expensesReducer = (state = expensesReducerDefaultState,action) => {
@@ -122,6 +135,15 @@ const filtersReducer = (state = filtersReducerDefaultState,action) => {
             return Object.assign({},state,{
                 text:action.text
             });
+            case 'SORT_BY_AMOUNT':
+                return Object.assign({},state,{
+                    sortBy:'amount'
+                });
+                case 'SORT_BY_DATE':
+                    return Object.assign({},state,{
+                        sortBy:'date'
+                    })
+
         default:
             return state;
     }
@@ -136,7 +158,7 @@ const store = createStore(combineReducers({
 
 
 store.subscribe(() => {
-    console.log(store.getState());
+   console.log(store.getState());
 })
 const expenseOne = store.dispatch(addExpense({description:'Vacation',amount:500}
 ));
@@ -150,3 +172,6 @@ store.dispatch(removeExpense({id:expenseThree.expense.id}));
 
 store.dispatch(editExpense(expenseTwo.expense.id,{ description:'Tea'}));
 store.dispatch(setTextFilter('sport'));
+
+store.dispatch(sortByAmount());
+store.dispatch(sortByDate());
