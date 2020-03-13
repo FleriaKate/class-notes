@@ -2,20 +2,39 @@ import { createStore,combineReducers }  from 'redux';
 import uuid from 'uuid';
 
 //ADD EXPENSE
-const addExpense = (expense) => {
+// const addExpense = (expense = {}) => {
+//     return {
+//         type:'ADD_EXPENSE',
+//         expense:{
+//             id: uuid(),
+//             description:expense.description ? expense.description : '',
+//             note: expense.note ? expense.note:'',
+//             amount: expense.amount ? expense.amount : 0,
+//             createdAt: expense.createdAt ? expense.createdAt : 0
+
+//         }
+//     }
+// }
+
+const addExpense = (
+    {
+        description = '',
+        note = '',
+        amount = 0,
+        createdAt = 0
+      } = {}
+) => {
     return {
         type:'ADD_EXPENSE',
         expense:{
-            id: uuid(),
-            description:expense.description ? expense.description : '',
-            note: expense.note ? expense.note:'',
-            amount: expense.amount ? expense.amount : 0,
-            createdAt: expense.createdAt ? expense.createdAt : 0
-
-        }
+            id:uuid(),
+            description,
+            note,
+            amount,
+            createdAt
     }
 }
-
+}
 //Expenses Reducer
 const expensesReducerDefaultState = [];
 const expensesReducer = (state = expensesReducerDefaultState,action) => {
@@ -62,6 +81,9 @@ const expenseOne = store.dispatch(addExpense({description:'Vacation',amount:500}
 
 const expenseTwo = store.dispatch(addExpense({description:'Coffee',amount:600 })
 );
+
+const expenseThree = store.dispatch(addExpense('miracle baby'))
+const expenseFour = store.dispatch(addExpense());
 
 ///expenses;;;filters
 // const demoState = {
