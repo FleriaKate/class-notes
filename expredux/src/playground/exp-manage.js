@@ -89,7 +89,7 @@ const sortByAmount = () => {
     }
 }
 //SORT BY DATE
-const sortByDate = () => {
+const sortByDate = () => {//action creator
     return {
         type:'SORT_BY_DATE'
     }
@@ -99,15 +99,15 @@ const sortByDate = () => {
 const setStartDate = (startDate) => {
     return {
         type: 'SET_START_DATE',
-        startDate
+        startDate//payload
     }
 }
 
 //SET_END_DATE
-const setEndDate = (endDate) => {
+const setEndDate = (endDate) => {//action creator
     return {
         type:'SET_END_DATA',
-        endDate
+        endDate//payload
 
     }
 }
